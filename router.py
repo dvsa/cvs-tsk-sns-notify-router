@@ -78,8 +78,8 @@ def handler(event, context):
             payload['web_hook_url'] = os.getenv('DATA_MIGRATION_WEBHOOK')
 
         try:
-            with boto3.client('lambda', 'eu-west-1') as lamb:  # type: Client
-                resp: Dict = lamb.invoke(LAMBDA_NAME, Payload=json.dumps(payload))
+            lamb: Client = boto3.client('lambda', 'eu-west-1')
+            resp: Dict = lamb.invoke(LAMBDA_NAME, Payload=json.dumps(payload))
             if resp.get('FunctionError') is not None:
                 raise RuntimeError(f'{LAMBDA_NAME} failed to notify with {payload}')
             else:
