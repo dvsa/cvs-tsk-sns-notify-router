@@ -79,7 +79,7 @@ def handler(event, context):
 
         try:
             lamb: Client = boto3.client('lambda', 'eu-west-1')
-            resp: Dict = lamb.invoke(LAMBDA_NAME, Payload=json.dumps(payload))
+            resp: Dict = lamb.invoke(FunctionName=LAMBDA_NAME, Payload=json.dumps(payload))
             if resp.get('FunctionError') is not None:
                 raise RuntimeError(f'{LAMBDA_NAME} failed to notify with {payload}')
             else:
