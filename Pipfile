@@ -1,0 +1,14 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+boto3-type-annotations-with-docs = "*"
+
+[packages]
+boto3 = "*"
+boto3-type-annotations = "*"
+
+[requires]
+python_version = "3.7"
