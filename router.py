@@ -13,9 +13,9 @@ from botocore.exceptions import ClientError
 LAMBDA_NAME = os.getenv('NOTIFY_LAMBDA_NAME')
 
 COLOURS = {
-    'INSUFFICIENT_DATA': 'ffb900',
-    'ALARM': 'f25022',
-    'OK': '7Fba00'
+    'INSUFFICIENT_DATA': 'fce94f',
+    'ALARM': 'ef2929',
+    'OK': 'acda00'
 }
 
 logger = logging.getLogger(__name__)
@@ -87,7 +87,7 @@ def handler(event, context):
                     "@type": "MessageCard",
                     "@context": "https://schema.org/extensions",
                     "summary": f"AWS Cloudwatch Alarm: {alarm_name} has transitioned",
-                    "title": f"**AWS Cloudwatch Alarm**",
+                    "title": "AWS Cloudwatch Alarm",
                     "themeColor": COLOURS[new_state],
                     "sections": [
                         {
