@@ -14,4 +14,4 @@ cd ${SITE_PACKAGES}
 7z a -tzip -mx=9 ${DIR}/package.zip boto3_type_annotations*
 cd ${DIR}
 7z d package.zip pip pip* setuptools setuptools* wheel wheel* pkg_resources pkg_resources* easy_install easy_install* *.dist-info -r
-7z a package.zip router.py
+7z a package.zip router.py config.ini
