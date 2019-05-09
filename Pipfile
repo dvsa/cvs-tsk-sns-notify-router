@@ -9,6 +9,7 @@ boto3-type-annotations-with-docs = "*"
 [packages]
 boto3 = "*"
 boto3-type-annotations = "*"
+aws_xray_sdk = "*"
 
 [requires]
 python_version = "3.7"

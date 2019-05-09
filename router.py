@@ -7,8 +7,11 @@ from typing import Dict, List
 from urllib.parse import quote
 
 import boto3
+from aws_xray_sdk.core import patch_all, xray_recorder
 from boto3_type_annotations.lambda_ import Client
 from botocore.exceptions import ClientError
+
+patch_all()
 
 LAMBDA_NAME = os.getenv('NOTIFY_LAMBDA_NAME')
 
@@ -24,6 +27,7 @@ config = ConfigParser()
 config.read('config.ini')
 
 
+@xray_recorder.capture('invoke')
 def send_payload(payload: Dict):
     try:
         lamb: Client = boto3.client('lambda', 'eu-west-1')
