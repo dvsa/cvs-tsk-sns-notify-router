@@ -27,7 +27,7 @@ config = ConfigParser()
 config.read('config.ini')
 
 
-@xray_recorder.capture('invoke')
+@xray_recorder.capture('Invoke DevOps Notify')
 def send_payload(payload: Dict):
     try:
         lamb: Client = boto3.client('lambda', 'eu-west-1')
