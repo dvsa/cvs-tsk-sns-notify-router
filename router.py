@@ -7,11 +7,11 @@ from typing import Dict, List
 from urllib.parse import quote
 
 import boto3
-from aws_xray_sdk.core import patch_all, xray_recorder
+from aws_xray_sdk.core import patch, xray_recorder
 from boto3_type_annotations.lambda_ import Client
 from botocore.exceptions import ClientError
 
-patch_all(double_patch=True)
+patch('boto3')
 
 LAMBDA_NAME = os.getenv('NOTIFY_LAMBDA_NAME')
 
