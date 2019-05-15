@@ -11,7 +11,7 @@ from aws_xray_sdk.core import patch_all, xray_recorder
 from boto3_type_annotations.lambda_ import Client
 from botocore.exceptions import ClientError
 
-patch_all()
+patch_all(double_patch=True)
 
 LAMBDA_NAME = os.getenv('NOTIFY_LAMBDA_NAME')
 
