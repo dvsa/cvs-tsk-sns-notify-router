@@ -43,7 +43,9 @@ def send_payload(payload: Dict):
         raise
 
 
+@xray_recorder.capture('Get Recipients')
 def get_recipients(alarm_name) -> List[str]:
+    xray_recorder.put_annotation('Alarm Name', alarm_name)
     return [r.strip() for r in config.get(section="Recipients", option=alarm_name).split(',')]
 
 
@@ -61,6 +63,7 @@ def handler(event, context):
         reason = message['NewStateReason']
         trigger = message['Trigger']
         if trigger['Namespace'] == 'ETL':
+            xray_recorder.begin_subsegment('ETL Route')
             template_id = config.get(section="Templates", option="ETLAlarm")
             for recipient in get_recipients(alarm_name):
                 payload = {
@@ -84,7 +87,9 @@ def handler(event, context):
                     }
                 }
                 send_payload(payload)
+            xray_recorder.end_subsegment()
         else:
+            xray_recorder.begin_subsegment('DevOps Route')
             payload = {
                 "message_type": "teams",
                 "body": {
@@ -135,3 +140,4 @@ def handler(event, context):
                 }
             }
             send_payload(payload)
+            xray_recorder.end_subsegment()
