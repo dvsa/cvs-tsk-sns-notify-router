@@ -31,7 +31,7 @@ config.read('config.ini')
 def send_payload(payload: Dict):
     try:
         lamb: Client = boto3.client('lambda', 'eu-west-1')
-        resp: Dict = lamb.invoke(FunctionName=LAMBDA_NAME, Payload=json.dumps(payload))
+        resp: Dict = lamb.invoke(FunctionName=LAMBDA_NAME, Payload=json.dumps(payload), InvocationType='Event')
         err = resp.get('FunctionError')
         if err is not None:
             logger.info(f"FunctionError: {err}")
