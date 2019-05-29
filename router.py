@@ -32,12 +32,10 @@ def send_payload(payload: Dict):
     try:
         lamb: Client = boto3.client('lambda', 'eu-west-1')
         resp: Dict = lamb.invoke(FunctionName=LAMBDA_NAME, Payload=json.dumps(payload), InvocationType='Event')
-        err = resp.get('FunctionError')
-        if err is not None:
-            logger.info(f"FunctionError: {err}")
+        code = resp.get('StatusCode')
+        if code != 202:
+            logger.info(f"FunctionError: {code}")
             raise RuntimeError(f'{LAMBDA_NAME} failed to notify with {payload}')
-        else:
-            return resp['Payload'].read()
     except ClientError:
         logger.exception("Error when invoking DevOps notify.")
         raise
